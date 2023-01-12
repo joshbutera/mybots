@@ -155,6 +155,8 @@ def Send_Synapse( sourceNeuronName , targetNeuronName , weight ):
  
 def Set_Motor_For_Joint(bodyIndex,jointName,controlMode,targetPosition,maxForce):
 
+    print(jointNamesToIndices[jointName])
+
     p.setJointMotorControl2(
 
         bodyIndex      = bodyIndex,
