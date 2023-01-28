@@ -5,6 +5,9 @@ import os
 
 class PARALLEL_HILL_CLIMBER:
    def __init__(self):
+      os.system("rm brain*.nndf")
+      os.system("rm fitness*.nndf")
+
       self.parents = {}
       self.nextAvailableID = 0
       for i in range(c.populationSize):
@@ -12,36 +15,48 @@ class PARALLEL_HILL_CLIMBER:
          self.nextAvailableID += 1
    
    def Evolve(self):
-      for i in self.parents:
-         self.parents[i].Evalulate("GUI")
-         os.system("python3 simulate.py GUI")
-      pass
-      # self.parent.Evalulate()
-      # for currentGeneration in range(c.numberOfGenerations):
-      #    self.Evolve_For_One_Generation()
+      self.Evalulate(self.parents)
+      for currentGeneration in range(c.numberOfGenerations):
+         self.Evolve_For_One_Generation()
 
    def Evolve_For_One_Generation(self):
       self.Spawn()
       self.Mutate()
-      self.child.Evalulate()
+      self.Evalulate(self.children)
       self.Print()
       self.Select()
 
    def Spawn(self):
-      self.child = copy.deepcopy(self.parent)
-      self.child.Set_ID(self.nextAvailableID)
-      self.nextAvailableID += 1
+      self.children = {}
+      for i in range(len(self.parents)):
+         self.children[i] = copy.deepcopy(self.parents[i])
+         self.children[i].Set_ID(self.nextAvailableID)
+         self.nextAvailableID += 1
 
    def Mutate(self):
-      self.child.Mutate()
+      for i in self.children:
+         self.children[i].Mutate()
 
    def Select(self):
-      if self.child.fitness > self.parent.fitness:
-         self.parent = self.child
+      for i in self.children:
+         if self.children[i].fitness < self.parents[i].fitness:
+            self.parents[i] = self.children[i]
+   
+   def Evalulate(self, solutions):
+      for i in solutions:
+         solutions[i].Start_Simulation("DIRECT")
+      for i in solutions:
+         solutions[i].Wait_For_Simulation_To_End()
 
    def Print(self):
-      print("FITNESS:", self.parent.fitness, self.child.fitness)
+      for i in self.parents:
+         print("FITNESS:", self.parents[i].fitness, self.children[i].fitness)
    
    def Show_Best(self):
-      pass
-      # os.system("python3 simulate.py GUI")
+      minIndex = 0
+      minVal = self.parents[0].fitness
+      for i in self.parents:
+         if self.parents[i].fitness < minVal:
+            minVal = self.parents[i].fitness
+            minIndex = i
+      self.parents[minIndex].Start_Simulation("GUI")

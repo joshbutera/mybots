@@ -42,28 +42,18 @@ class SOLUTION:
 
       pyrosim.End()
 
-   def Evalulate(self, directOrGUI):
-      self.Create_World()
-      self.Create_Body()
-      self.Create_Brain()
-      os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
-      while not os.path.exists("fitness" + str(self.myID) + ".txt"):
-         time.sleep(0.01)
-      f = open("fitness" + str(self.myID) + ".txt", "r")
-      self.fitness = float(f.read())
-
    def Start_Simulation(self, directOrGUI):
       self.Create_World()
       self.Create_Body()
       self.Create_Brain()
-
-   def Wait_For_Simulation_To_End(self, directOrGUI):
       os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+
+   def Wait_For_Simulation_To_End(self):
       while not os.path.exists("fitness" + str(self.myID) + ".txt"):
          time.sleep(0.01)
       f = open("fitness" + str(self.myID) + ".txt", "r")
       self.fitness = float(f.read())
-      os.system("rm fitness ")
+      os.system("rm fitness" + str(self.myID) + ".txt")
 
    def Mutate(self):
       randomRow = random.randint(0,2)
