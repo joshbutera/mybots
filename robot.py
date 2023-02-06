@@ -35,12 +35,13 @@ class ROBOT:
 
       # for jointName in self.motors:
       #    self.motors[jointName].Set_Value(t)
-   def Get_Fitness(self, robotId):
-      stateOfLinkZero = p.getLinkState(robotId,0)
-      positionOfLinkZero = stateOfLinkZero[0]
-      xCoordinateOfLinkZero = positionOfLinkZero[0]
+   def Get_Fitness(self, robotId, objectId):
+      print(objectId)
+      basePositionAndOrientation = p.getBasePositionAndOrientation(objectId)
+      basePosition = basePositionAndOrientation[0]
+      xPosition = basePosition[0]
       f = open("tmp" + self.solutionID + ".txt", "w")
-      f.write(str(xCoordinateOfLinkZero))
+      f.write(str(xPosition))
       f.close()
       os.system("mv tmp" + self.solutionID + ".txt fitness" + self.solutionID + ".txt")
 

@@ -25,6 +25,7 @@ class SIMULATION:
 
       self.planeId = p.loadURDF("plane.urdf")
       self.robotId = p.loadURDF("body.urdf")
+      self.objectId = p.loadURDF("object.urdf")
       p.loadSDF("world.sdf")
 
       pyrosim.Prepare_To_Simulate(self.robotId)
@@ -48,7 +49,7 @@ class SIMULATION:
       # np.save('data/frontLegSensorValues.npy', frontLegSensorValues)
 
    def Get_Fitness(self):
-      self.robot.Get_Fitness(self.robotId)
+      self.robot.Get_Fitness(self.robotId, self.objectId)
    
    def __del__(self):
       p.disconnect()

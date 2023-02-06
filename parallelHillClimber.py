@@ -13,17 +13,19 @@ class PARALLEL_HILL_CLIMBER:
       for i in range(c.populationSize):
          self.parents[i] = SOLUTION(self.nextAvailableID)
          self.nextAvailableID += 1
+      self.parents[0].Start_Simulation("GUI")
    
    def Evolve(self):
       self.Evalulate(self.parents)
       for currentGeneration in range(c.numberOfGenerations):
+         print('### STARTING GENERATION', currentGeneration, '/', c.numberOfGenerations)
          self.Evolve_For_One_Generation()
 
    def Evolve_For_One_Generation(self):
       self.Spawn()
       self.Mutate()
       self.Evalulate(self.children)
-      self.Print()
+      # self.Print()
       self.Select()
 
    def Spawn(self):
@@ -38,9 +40,18 @@ class PARALLEL_HILL_CLIMBER:
          self.children[i].Mutate()
 
    def Select(self):
-      for i in self.children:
-         if self.children[i].fitness < self.parents[i].fitness:
-            self.parents[i] = self.children[i]
+      soltuions = list(self.parents.values()) + list(self.children.values())
+      soltuionsSorted = sorted(soltuions, key=lambda object: object.fitness)
+
+      # toCopy = self.parents[0]
+      # for i in self.parents:
+      #    if self.parents[i].fitness < toCopy.fitness:
+      #       toCopy = self.parents[i]
+      #    if self.children[i].fitness < toCopy.fitness:
+      #       toCopy = self.children[i]
+      print('BEST FITNESS:', soltuionsSorted[0].fitness)
+      for i in self.parents:
+         self.parents[i] = soltuionsSorted[i]
    
    def Evalulate(self, solutions):
       for i in solutions:
@@ -59,4 +70,5 @@ class PARALLEL_HILL_CLIMBER:
          if self.parents[i].fitness < minVal:
             minVal = self.parents[i].fitness
             minIndex = i
+      print('FINAL FITNESS:', self.parents[minIndex].fitness, '\n')
       self.parents[minIndex].Start_Simulation("GUI")
