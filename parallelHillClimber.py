@@ -2,6 +2,7 @@ import copy
 from solution import SOLUTION
 import constants as c
 import os
+import numpy as np
 
 class PARALLEL_HILL_CLIMBER:
    def __init__(self):
@@ -18,7 +19,7 @@ class PARALLEL_HILL_CLIMBER:
    def Evolve(self):
       self.Evalulate(self.parents)
       for currentGeneration in range(c.numberOfGenerations):
-         print('### STARTING GENERATION', currentGeneration, '/', c.numberOfGenerations)
+         print('### STARTING GENERATION', currentGeneration+1, '/', c.numberOfGenerations)
          self.Evolve_For_One_Generation()
 
    def Evolve_For_One_Generation(self):

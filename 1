@@ -1,0 +1,36 @@
+pybullet build time: Jan  2 2023 23:44:48
+Version = 4.1 ATI-4.9.48
+Vendor = ATI Technologies Inc.
+Renderer = AMD Radeon Pro Vega 20 OpenGL Engine
+b3Printf: Selected demo: Physics Server
+startThreads creating 1 threads.
+starting thread 0
+started thread 0 
+MotionThreadFunc thread started
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: expected a world element, continuing without it.
+Traceback (most recent call last):
+  File "/Users/joshbutera/Documents/Northwestern/2022-2023/WQ2023/CS396/simulation/simulate.py", line 13, in <module>
+    simulation.RUN()
+  File "/Users/joshbutera/Documents/Northwestern/2022-2023/WQ2023/CS396/simulation/simulation.py", line 40, in RUN
+    self.robot.Sense(i)
+  File "/Users/joshbutera/Documents/Northwestern/2022-2023/WQ2023/CS396/simulation/robot.py", line 21, in Sense
+    self.sensors[sensor].Get_Value(t)
+  File "/Users/joshbutera/Documents/Northwestern/2022-2023/WQ2023/CS396/simulation/sensor.py", line 11, in Get_Value
+    self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+  File "/Users/joshbutera/Documents/Northwestern/2022-2023/WQ2023/CS396/simulation/pyrosim/pyrosim.py", line 53, in Get_Touch_Sensor_Value_For_Link
+    for pt in pts:
+TypeError: 'NoneType' object is not iterable
+Exception ignored in: <function SIMULATION.__del__ at 0x7fcf5862adc0>
+Traceback (most recent call last):
+  File "/Users/joshbutera/Documents/Northwestern/2022-2023/WQ2023/CS396/simulation/simulation.py", line 51, in __del__
+pybullet.error: Not connected to physics server.
+numActiveThreads = 0
+stopping threads
+Thread with taskId 0 exiting
+Thread TERMINATED
+destroy semaphore
+semaphore destroyed
+destroy main semaphore
+main semaphore destroyed

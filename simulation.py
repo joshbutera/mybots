@@ -10,9 +10,9 @@ import time
 import constants as c
 
 class SIMULATION:
-   def __init__(self, directOrGUI, solutionID):
+   def __init__(self, directOrGUI):
       self.world = WORLD()
-      self.robot = ROBOT(solutionID)
+      self.robot = ROBOT()
       self.directOrGUI = directOrGUI
 
       if directOrGUI == "DIRECT":
@@ -25,7 +25,6 @@ class SIMULATION:
 
       self.planeId = p.loadURDF("plane.urdf")
       self.robotId = p.loadURDF("body.urdf")
-      self.objectId = p.loadURDF("object.urdf")
       p.loadSDF("world.sdf")
 
       pyrosim.Prepare_To_Simulate(self.robotId)
@@ -47,9 +46,6 @@ class SIMULATION:
          
       # np.save('data/backLegSensorValues.npy', backLegSensorValues)
       # np.save('data/frontLegSensorValues.npy', frontLegSensorValues)
-
-   def Get_Fitness(self):
-      self.robot.Get_Fitness(self.robotId, self.objectId)
    
    def __del__(self):
       p.disconnect()

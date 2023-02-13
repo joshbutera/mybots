@@ -7,11 +7,9 @@ import os
 import constants as c
 
 class ROBOT:
-   def __init__(self, solutionID):
+   def __init__(self):
       self.motors = {}
-      self.nn = NEURAL_NETWORK("brain" + str(solutionID) + ".nndf")
-      os.system("rm brain" + str(solutionID) + ".nndf")
-      self.solutionID = solutionID
+      self.nn = NEURAL_NETWORK("brain.nndf")
 
    def Prepare_To_Sense(self):
       self.sensors = {}
@@ -36,7 +34,6 @@ class ROBOT:
       # for jointName in self.motors:
       #    self.motors[jointName].Set_Value(t)
    def Get_Fitness(self, robotId, objectId):
-      print(objectId)
       basePositionAndOrientation = p.getBasePositionAndOrientation(objectId)
       basePosition = basePositionAndOrientation[0]
       xPosition = basePosition[0]
@@ -47,5 +44,4 @@ class ROBOT:
 
    def Think(self):
       self.nn.Update()
-      # self.nn.Print()
    
