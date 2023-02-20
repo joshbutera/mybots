@@ -34,14 +34,13 @@ class SOLUTION:
          color = "blue"
          if self.hasSensor[i] == 1:
             color = "green"
-         connectedTo = np.random.randint(0, i)
-         self.connections[connectedTo].append(i)
+         self.connections[i-1].append(i)
 
          temp = np.random.randint(0,3)
          position = [0, 0, 0]
-         position[temp] = self.dimensions[connectedTo][temp] * random.choice([-1, 1])
+         position[temp] = self.dimensions[i-1][temp] * random.choice([-1, 1])
 
-         pyrosim.Send_Joint(name='Cube'+str(connectedTo)+'_Cube'+str(i), parent='Cube'+str(connectedTo), child='Cube'+str(i), type='revolute', position=position, jointAxis="1 0 0")
+         pyrosim.Send_Joint(name='Cube'+str(i-1)+'_Cube'+str(i), parent='Cube'+str(i-1), child='Cube'+str(i), type='revolute', position=position, jointAxis="1 0 0")
          pyrosim.Send_Cube(name='Cube'+str(i), pos=[0,0,self.maxHeight/2], size=self.dimensions[i], color=color)
 
       pyrosim.End()
