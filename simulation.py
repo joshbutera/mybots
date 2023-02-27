@@ -10,9 +10,9 @@ import time
 import constants as c
 
 class SIMULATION:
-   def __init__(self, directOrGUI):
+   def __init__(self, directOrGUI, solutionID):
       self.world = WORLD()
-      self.robot = ROBOT()
+      self.robot = ROBOT(solutionID)
       self.directOrGUI = directOrGUI
 
       if directOrGUI == "DIRECT":
@@ -46,6 +46,9 @@ class SIMULATION:
          
       # np.save('data/backLegSensorValues.npy', backLegSensorValues)
       # np.save('data/frontLegSensorValues.npy', frontLegSensorValues)
+
+   def Get_Fitness(self):
+      self.robot.Get_Fitness(self.robotId)
    
    def __del__(self):
       p.disconnect()

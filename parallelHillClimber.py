@@ -15,6 +15,7 @@ class PARALLEL_HILL_CLIMBER:
          self.parents[i] = SOLUTION(self.nextAvailableID)
          self.nextAvailableID += 1
       self.parents[0].Start_Simulation("GUI")
+      self.fitnessByGeneration = []
    
    def Evolve(self):
       self.Evalulate(self.parents)
@@ -41,18 +42,14 @@ class PARALLEL_HILL_CLIMBER:
          self.children[i].Mutate()
 
    def Select(self):
-      soltuions = list(self.parents.values()) + list(self.children.values())
-      soltuionsSorted = sorted(soltuions, key=lambda object: object.fitness)
+      best = self.parents[0].fitness
 
-      # toCopy = self.parents[0]
-      # for i in self.parents:
-      #    if self.parents[i].fitness < toCopy.fitness:
-      #       toCopy = self.parents[i]
-      #    if self.children[i].fitness < toCopy.fitness:
-      #       toCopy = self.children[i]
-      print('BEST FITNESS:', soltuionsSorted[0].fitness)
-      for i in self.parents:
-         self.parents[i] = soltuionsSorted[i]
+      for i in self.children:
+         best = min(best, self.children[i].fitness, self.parents[i].fitness)
+         if self.children[i].fitness < self.parents[i].fitness:
+            self.parents[i] = self.children[i]
+      print('BEST FITNESS:', best)
+      self.fitnessByGeneration.append(-best)
    
    def Evalulate(self, solutions):
       for i in solutions:
@@ -73,3 +70,6 @@ class PARALLEL_HILL_CLIMBER:
             minIndex = i
       print('FINAL FITNESS:', self.parents[minIndex].fitness, '\n')
       self.parents[minIndex].Start_Simulation("GUI")
+   
+   def GetAllFitnesses(self):
+      return self.fitnessByGeneration
