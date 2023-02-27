@@ -8,10 +8,17 @@ import constants as c
 
 class SOLUTION:
    def __init__(self):
-      self.numLinks = np.random.randint(3,10)
+      self.numLinks = np.random.randint(3,7)
       self.dimensions = (np.random.rand(self.numLinks, 3) + 0.5)
       self.hasSensor = np.random.randint(0,2,self.numLinks)
       self.connections = [[] for i in range(self.numLinks)]
+
+      self.available = []
+      for i in range(self.numLinks):
+         self.available.append({tuple([1,0,0]), tuple([-1,0,0]), tuple([0,1,0]), tuple([0,-1,0]), tuple([0,0,1]), tuple([0,0,-1])})
+
+      # give every cube a set of all possible directions (i.e [1, 0, 0], [0, -1, 0]) and remove directions whenever joint is connected in that direction
+      # joint will pick random direction from set
 
       self.maxHeight = self.dimensions[0][2]
       for dim in self.dimensions:
@@ -28,20 +35,31 @@ class SOLUTION:
       color = "blue"
       if self.hasSensor[0] == 1:
             color = "green"
-      pyrosim.Send_Cube(name='Cube0', pos=[0,0,self.maxHeight], size=self.dimensions[0], color=color)
+      pyrosim.Send_Cube(name='Cube0', pos=[0,0,self.dimensions[0][2]/2], size=self.dimensions[0], color=color)
 
       for i in range(1, self.numLinks):
          color = "blue"
          if self.hasSensor[i] == 1:
             color = "green"
-         self.connections[i-1].append(i)
+         
+         connectedTo = np.random.randint(0, i)
+         while self.available[connectedTo] == {}:
+            connectedTo = np.random.randint(0, i)
+         self.connections[connectedTo].append(i)
 
-         temp = np.random.randint(0,3)
-         position = [0, 0, 0]
-         position[temp] = self.dimensions[i-1][temp] * random.choice([-1, 1])
+         position = random.choice(tuple(self.available[connectedTo]))
+         self.available[connectedTo].remove(position)
+         position = list(position)
+         for j in range(len(position)):
+            position[j] *= -1
+         self.available[i].remove(tuple(position))
+         for j in range(len(position)):
+            position[j] *= -self.dimensions[i][j]
 
-         pyrosim.Send_Joint(name='Cube'+str(i-1)+'_Cube'+str(i), parent='Cube'+str(i-1), child='Cube'+str(i), type='revolute', position=position, jointAxis="1 0 0")
-         pyrosim.Send_Cube(name='Cube'+str(i), pos=[0,0,self.maxHeight/2], size=self.dimensions[i], color=color)
+         self.connections[connectedTo].append(i)
+
+         pyrosim.Send_Joint(name='Cube'+str(connectedTo)+'_Cube'+str(i), parent='Cube'+str(connectedTo), child='Cube'+str(i), type='revolute', position=position, jointAxis="1 0 0")
+         pyrosim.Send_Cube(name='Cube'+str(i), pos=[0,0,self.dimensions[i][2]/2], size=self.dimensions[i], color=color)
 
       pyrosim.End()
 
