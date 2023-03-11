@@ -16,19 +16,19 @@ class SOLUTION:
       self.myID = myID
 
       self.dimensions = [
-         [2,0.8,0.6],
-         [0.2,0.3,0.2],
-         [0.5,0.2,0.2],
-         [0.2,0.2,0.75],
-         [0.2,0.3,0.2],
-         [0.5,0.2,0.2],
-         [0.2,0.2,0.75],
-         [0.2,0.3,0.2],
-         [0.5,0.2,0.2],
-         [0.2,0.2,0.75],
-         [0.2,0.3,0.2],
-         [0.5,0.2,0.2],
-         [0.2,0.2,0.75]
+         [2 + np.random.rand() * .1 - 0.05,0.8 + np.random.rand() * .1- 0.05,0.6 + np.random.rand() * .1- 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.3 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.5 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.75 + np.random.rand() * .1 - 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.3 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.5 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.75 + np.random.rand() * .1 - 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.3 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.5 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.75 + np.random.rand() * .1 - 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.3 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.5 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05],
+         [0.2 + np.random.rand() * .1 - 0.05,0.2 + np.random.rand() * .1 - 0.05,0.75 + np.random.rand() * .1 - 0.05]
       ]
 
       self.colors = []
@@ -60,7 +60,7 @@ class SOLUTION:
       pyrosim.Send_Joint( name = "Cube1_Cube2" , parent= "Cube1" , child = "Cube2" , type = "revolute", position = [self.dimensions[1][0],2*self.dimensions[1][1],0], jointAxis = "0 1 0")
       self.connections[1].add(2)
       pyrosim.Send_Cube(name="Cube2", pos=[0,0,0] , size=self.dimensions[2], color=self.colors[2])
-      pyrosim.Send_Joint( name = "Cube2_Cube3" , parent= "Cube2" , child = "Cube3" , type = "revolute", position = [self.dimensions[2][0]/3,0,-initialHeight/2], jointAxis = "0 1 0")
+      pyrosim.Send_Joint( name = "Cube2_Cube3" , parent= "Cube2" , child = "Cube3" , type = "revolute", position = [self.dimensions[2][0]/4,0,-initialHeight/2], jointAxis = "0 1 0")
       self.connections[2].add(3)
       pyrosim.Send_Cube(name="Cube3", pos=[0,0,0] , size=self.dimensions[3], color=self.colors[3])
       
@@ -70,7 +70,7 @@ class SOLUTION:
       pyrosim.Send_Joint( name = 'Cube4_Cube5' , parent= 'Cube4' , child = 'Cube5' , type = 'revolute', position = [self.dimensions[4][0],-2*self.dimensions[4][1],0], jointAxis = "0 1 0")
       self.connections[4].add(5)
       pyrosim.Send_Cube(name='Cube5', pos=[0,0,0] , size=self.dimensions[5], color=self.colors[5])
-      pyrosim.Send_Joint( name = 'Cube5_Cube6' , parent= 'Cube5' , child = 'Cube6' , type = 'revolute', position = [self.dimensions[5][0]/3,0,-initialHeight/2], jointAxis = "0 1 0")
+      pyrosim.Send_Joint( name = 'Cube5_Cube6' , parent= 'Cube5' , child = 'Cube6' , type = 'revolute', position = [self.dimensions[5][0]/4,0,-initialHeight/2], jointAxis = "0 1 0")
       self.connections[5].add(6)
       pyrosim.Send_Cube(name='Cube6', pos=[0,0,0] , size=self.dimensions[6], color=self.colors[6])
       
@@ -80,7 +80,7 @@ class SOLUTION:
       pyrosim.Send_Joint( name = 'Cube7_Cube8' , parent= 'Cube7' , child = 'Cube8' , type = 'revolute', position = [self.dimensions[7][0],2*self.dimensions[7][1],0], jointAxis = "0 1 0")
       self.connections[7].add(8)
       pyrosim.Send_Cube(name='Cube8', pos=[0,0,0] , size=self.dimensions[8], color=self.colors[8])
-      pyrosim.Send_Joint( name = 'Cube8_Cube9' , parent= 'Cube8' , child = 'Cube9' , type = 'revolute', position = [self.dimensions[8][0]/3,0,-initialHeight/2], jointAxis = "0 1 0")
+      pyrosim.Send_Joint( name = 'Cube8_Cube9' , parent= 'Cube8' , child = 'Cube9' , type = 'revolute', position = [self.dimensions[8][0]/4,0,-initialHeight/2], jointAxis = "0 1 0")
       self.connections[8].add(9)
       pyrosim.Send_Cube(name='Cube9', pos=[0,0,0] , size=self.dimensions[9], color=self.colors[9])
       
@@ -90,7 +90,7 @@ class SOLUTION:
       pyrosim.Send_Joint( name = 'Cube10_Cube11' , parent= 'Cube10' , child = 'Cube11' , type = 'revolute', position = [self.dimensions[10][0],-2*self.dimensions[10][1],0], jointAxis = "0 1 0")
       self.connections[10].add(11)
       pyrosim.Send_Cube(name='Cube11', pos=[0,0,0] , size=self.dimensions[11], color=self.colors[11])
-      pyrosim.Send_Joint( name = 'Cube11_Cube12' , parent= 'Cube11' , child = 'Cube12' , type = 'revolute', position = [self.dimensions[11][0]/3,0,-initialHeight/2], jointAxis = "0 1 0")
+      pyrosim.Send_Joint( name = 'Cube11_Cube12' , parent= 'Cube11' , child = 'Cube12' , type = 'revolute', position = [self.dimensions[11][0]/4,0,-initialHeight/2], jointAxis = "0 1 0")
       self.connections[11].add(12)
       pyrosim.Send_Cube(name='Cube12', pos=[0,0,0] , size=self.dimensions[12], color=self.colors[12])
 
