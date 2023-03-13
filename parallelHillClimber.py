@@ -3,18 +3,19 @@ from solution import SOLUTION
 import constants as c
 import os
 import numpy as np
+import pickle
 
 class PARALLEL_HILL_CLIMBER:
-   def __init__(self):
+   def __init__(self, seed):
       os.system("rm brain*.nndf")
       os.system("rm fitness*.nndf")
 
       self.parents = {}
       self.nextAvailableID = 0
       for i in range(c.populationSize):
-         self.parents[i] = SOLUTION(self.nextAvailableID)
+         self.parents[i] = SOLUTION(self.nextAvailableID, seed)
          self.nextAvailableID += 1
-      self.parents[0].Start_Simulation("GUI")
+      # self.parents[0].Start_Simulation("GUI")
       self.fitnessByGeneration = []
    
    def Evolve(self):
@@ -48,6 +49,9 @@ class PARALLEL_HILL_CLIMBER:
          best = min(best, self.children[i].fitness, self.parents[i].fitness)
          if self.children[i].fitness < self.parents[i].fitness:
             self.parents[i] = self.children[i]
+      # save best to file
+      with open('parents.pkl', 'wb') as file:
+         pickle.dump(self.parents, file)
       print('BEST FITNESS:', best)
       self.fitnessByGeneration.append(-best)
    
@@ -64,12 +68,13 @@ class PARALLEL_HILL_CLIMBER:
    def Show_Best(self):
       minIndex = 0
       minVal = self.parents[0].fitness
-      for i in self.parents:
+      for i in range(1, len(self.parents)):
          if self.parents[i].fitness < minVal:
             minVal = self.parents[i].fitness
             minIndex = i
-      print('FINAL FITNESS:', self.parents[minIndex].fitness, '\n')
       self.parents[minIndex].Start_Simulation("GUI")
+      self.parents[minIndex].Wait_For_Simulation_To_End()
+      print('FINAL FITNESS:', self.parents[minIndex].fitness, '\n')
    
    def GetAllFitnesses(self):
       return self.fitnessByGeneration

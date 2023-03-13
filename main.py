@@ -1,18 +1,17 @@
 from solution import SOLUTION
 from parallelHillClimber import PARALLEL_HILL_CLIMBER
 import matplotlib.pyplot as plt
+from numpy import savetxt
 
-scores = []
+data = []
 
-for seed in range(1, 6):
-   phc = PARALLEL_HILL_CLIMBER(1)
+for seed in range(1, 11):
+   phc = PARALLEL_HILL_CLIMBER(seed)
    phc.Evolve()
-   scores.append(phc.GetAllFitnesses())
-   plt.plot(phc.GetAllFitnesses(), label = "Seed " + str(seed))
-   # phc.Show_Best()
+   data.append(phc.GetAllFitnesses())
+   phc.Show_Best()
 
-plt.legend()
-plt.show()
+savetxt('data.csv', data, delimiter=',')
 
 # run = SOLUTION(0)
 # run.Start_Simulation()

@@ -7,8 +7,8 @@ import numpy as np
 import constants as c
 
 class SOLUTION:
-   def __init__(self, myID):
-      # np.random.seed(seed)
+   def __init__(self, myID, seed):
+      np.random.seed(seed)
       self.numLinks = 13
       self.hasSensor = np.random.randint(0,2,self.numLinks)
       self.weights = np.random.rand(self.numLinks,self.numLinks-1) * 2 - 1
